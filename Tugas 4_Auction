@@ -1,0 +1,146 @@
+// Person
+
+public class Person {
+    private String name;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+
+//bid
+
+public class Bid {
+    private Person bidder;
+    private double amount;
+
+    public Bid(Person bidder, double amount) {
+        this.bidder = bidder;
+        this.amount = amount;
+    }
+
+    public Person getBidder() {
+        return bidder;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+}
+
+// lot
+
+import java.util.ArrayList;
+
+public class Lot {
+    private int lotNumber;
+    private String description;
+    private ArrayList<Bid> bids;
+
+    public Lot(int lotNumber, String description) {
+        this.lotNumber = lotNumber;
+        this.description = description;
+        this.bids = new ArrayList<>();
+    }
+
+    public void addBid(Bid bid) {
+        bids.add(bid);
+    }
+
+    public ArrayList<Bid> getBids() {
+        return bids;
+    }
+
+    public Bid getHighestBid() {
+        if (bids.isEmpty()) {
+            return null;
+        }
+        
+        Bid highest = bids.get(0);
+        for (Bid bid : bids) {
+            if (bid.getAmount() > highest.getAmount()) {
+                highest = bid;
+            }
+        }
+        return highest;
+    }
+
+    public int getLotNumber() {
+        return lotNumber;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
+
+// auction
+
+import java.util.ArrayList;
+
+public class Auction {
+    private ArrayList<Lot> lots;
+
+    public Auction() {
+        lots = new ArrayList<>();
+    }
+
+    public void addLot(Lot lot) {
+        lots.add(lot);
+    }
+
+    public Lot getLot(int lotNumber) {
+        for (Lot lot : lots) {
+            if (lot.getLotNumber() == lotNumber) {
+                return lot;
+            }
+        }
+        return null;
+    }
+
+    public void placeBid(int lotNumber, Bid bid) {
+        Lot lot = getLot(lotNumber);
+        if (lot != null) {
+            lot.addBid(bid);
+        }
+    }
+}
+
+//Auction Test
+
+public class AuctionTest {
+
+    public static void main(String[] args) {
+
+        Auction auction = new Auction();
+
+        Lot lot1 = new Lot(1, "Antique Vase");
+
+        auction.addLot(lot1)
+
+        Person person1 = new Person("Jungkook");
+
+        Person person2 = new Person("Jaehyun");
+
+        Bid bid1 = new Bid(person1, 100.00);
+
+        Bid bid2 = new Bid(person2, 150.00);
+
+
+        auction.placeBid(1, bid1);
+
+        auction.placeBid(1, bid2);
+
+        System.out.println("Highest bid for Lot 1: " + lot1.getHighestBid().getAmount() +
+
+                           " by " + lot1.getHighestBid().getBidder().getName());
+
+    }
+
+}
+
