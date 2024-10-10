@@ -1,0 +1,148 @@
+// SupportSystem 
+
+ public class SupportSystem
+{
+    private InputReader reader;
+    private Responder responder;
+
+    /**
+     * Creates a technical support system.
+     */
+    public SupportSystem()
+    {
+        reader = new InputReader();
+        responder = new Responder();
+    }
+
+    /**
+     * Start the technical support system. This will print a
+     * welcome message and enter into a dialog with the user,
+     * until the user ends the dialog.
+     */
+    public void start()
+    {
+        boolean finished = false;
+        printWelcome();
+        
+        while(!finished) {
+            String input = reader.getInput();  // Get user input
+            
+            if(input.startsWith("bye")) {
+                finished = true;  // End loop if user says "bye"
+            } else {
+                // Pass the input to the responder and get the response
+                String response = responder.generateResponse(input);
+                System.out.println(response);  // Display the response
+            }
+        }
+        
+        printGoodbye();
+    }
+
+    /**
+     * Print a welcome message to the screen.
+     */
+    private void printWelcome()
+    {
+        System.out.println("Welcome to the DodgySoft Technical Support System.");
+        System.out.println();
+        System.out.println("Please tell us about your problem.");
+        System.out.println("We will assist you with any problem you might have.");
+        System.out.println("Please type 'bye' to exit our system.");
+    }
+
+    /**
+     * Print a good-bye message to the screen.
+     */
+    private void printGoodbye()
+    {
+        System.out.println("Nice talking to you. Bye...");
+    }
+}
+
+// Responder
+
+import java.util.HashMap;
+import java.util.Random;
+
+public class Responder
+{
+    private HashMap<String, String> responseMap;
+    private Random randomGenerator;
+
+    /**
+     * Construct a Responder - set up predefined responses.
+     */
+    public Responder()
+    {
+        responseMap = new HashMap<>();
+        randomGenerator = new Random();
+
+        // Add predefined responses based on keywords
+        responseMap.put("internet", "Please check your internet connection.");
+        responseMap.put("printer", "Make sure your printer is connected and has enough paper.");
+        responseMap.put("slow", "Try restarting your device to improve performance.");
+        responseMap.put("error", "Could you describe the error in more detail?");
+    }
+
+    /**
+     * Generate a response based on the user's input.
+     * @param input The user's input as a String.
+     * @return A string response.
+     */
+    public String generateResponse(String input)
+    {
+        for (String key : responseMap.keySet()) {
+            if (input.contains(key)) {
+                return responseMap.get(key);
+            }
+        }
+
+        // If no keyword matches, return a random response
+        return getRandomResponse();
+    }
+
+    /**
+     * Generate a random response if no keywords match.
+     * @return A random string response.
+     */
+    private String getRandomResponse()
+    {
+        String[] randomResponses = {
+            "That sounds interesting. Tell me more...",
+            "Hmm, I need more information to assist you.",
+            "Please check your device and try again.",
+            "Try restarting the application and see if that helps.",
+            "Is there any other error message showing?"
+        };
+
+        int index = randomGenerator.nextInt(randomResponses.length);
+        return randomResponses[index];
+    }
+}
+
+// InputReader
+import java.util.Scanner;
+
+public class InputReader
+{
+    private Scanner scanner;
+
+    /**
+     * Create a new InputReader that reads text from the terminal.
+     */
+    public InputReader()
+    {
+        scanner = new Scanner(System.in);
+    }
+
+    /**
+     * Read a line of input from the user.
+     * @return A string of user input.
+     */
+    public String getInput()
+    {
+        System.out.print("> ");  // Display a prompt for input
+        return scanner.nextLine();  // Read the user's input
+    }
+}
