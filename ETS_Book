@@ -1,0 +1,33 @@
+// Book
+class Book {
+    String title;
+    String author;
+    int yearPublished;
+    String publisher;
+    String category;
+
+    public Book(String title, String author, int yearPublished, String publisher, String category) {
+        this.title = title;
+        this.author = author;
+        this.yearPublished = yearPublished;
+        this.publisher = publisher;
+        this.category = category;
+    }
+
+    public void printDetails() {
+        System.out.println("Book Details:");
+        System.out.println("Title: " + title);
+        System.out.println("Author: " + author);
+        System.out.println("Year Published: " + yearPublished);
+        System.out.println("Publisher: " + publisher);
+        System.out.println("Category: " + category);
+    }
+}
+
+// main
+public class Main {
+    public static void main(String[] args) {
+        Book myBook = new Book("Kucing Baek", "Shin Junghwan", 1942, "TWS", "Novel");
+        myBook.printDetails();
+    }
+}
