@@ -1,0 +1,61 @@
+// Superclass (Kelas Induk)
+class Animal {
+    String name;
+    int age;
+
+    public Animal(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Metode umum untuk semua hewan
+    public void sleep() {
+        System.out.println(name + " is sleeping.");
+    }
+}
+
+// Subclass (Kelas Turunan)
+class Bird extends Animal {
+    String featherColor;
+
+    public Bird(String name, int age, String featherColor) {
+        super(name, age); // Memanggil konstruktor dari kelas induk
+        this.featherColor = featherColor;
+    }
+
+    // Metode khusus untuk burung
+    public void fly() {
+        System.out.println(name + " is flying with " + featherColor + " feathers.");
+    }
+}
+
+// Subclass (Kelas Turunan)
+class Fish extends Animal {
+    String waterType; // Freshwater or Saltwater
+
+    public Fish(String name, int age, String waterType) {
+        super(name, age); // Memanggil konstruktor dari kelas induk
+        this.waterType = waterType;
+    }
+
+    // Metode khusus untuk ikan
+    public void swim() {
+        System.out.println(name + " is swimming in " + waterType + " water.");
+    }
+}
+
+// Contoh penggunaan
+public class Main {
+    public static void main(String[] args) {
+        // Membuat objek burung dan ikan
+        Bird parrot = new Bird("Parrot", 3, "green");
+        Fish goldfish = new Fish("Goldfish", 1, "freshwater");
+
+        // Memanggil metode dari superclass dan subclass
+        parrot.sleep();  // Output: Parrot is sleeping.
+        parrot.fly();    // Output: Parrot is flying with green feathers.
+        
+        goldfish.sleep();  // Output: Goldfish is sleeping.
+        goldfish.swim();   // Output: Goldfish is swimming in freshwater water.
+    }
+}
