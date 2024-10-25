@@ -1,0 +1,34 @@
+public class ParkingTicketMachine {
+    private int balance;      
+    private int ticketPrice;  
+    private int ticketTime;   
+
+    public ParkingTicketMachine(int ticketPrice) {
+        this.ticketPrice = ticketPrice;
+        this.balance = 0;
+        this.ticketTime = 0;
+    }
+
+    public void insertMoney(int amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Saldo saat ini: Rp " + balance);
+        } else {
+            System.out.println("Jumlah tidak valid!");
+        }
+    }
+
+    public void issueTicket() {
+        if (balance >= ticketPrice) {
+            ticketTime = balance / ticketPrice;
+            balance = 0;
+            System.out.println("Tiket telah dikeluarkan. Waktu parkir: " + ticketTime + " jam");
+        } else {
+            System.out.println("Saldo tidak cukup. Masukkan lebih banyak uang.");
+        }
+    }
+
+    public int getTimePurchased() {
+        return ticketTime;
+    }
+}
