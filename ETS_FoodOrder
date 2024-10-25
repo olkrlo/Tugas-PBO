@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+
+public class FoodOrder {
+    private ArrayList<String> menuItems;  // Daftar item menu yang dipesan
+    private double totalPrice;            // Total harga pesanan
+    private boolean isPaid;               // Status apakah pesanan telah dibayar
+
+    // Constructor
+    public FoodOrder() {
+        this.menuItems = new ArrayList<>();
+        this.totalPrice = 0;
+        this.isPaid = false;
+    }
+
+    // Menambahkan item menu ke pesanan
+    public void addMenuItem(String item, double price) {
+        menuItems.add(item);
+        totalPrice += price;
+        System.out.println(item + " telah ditambahkan dengan harga Rp " + price);
+    }
+
+    // Menandai pesanan telah dibayar
+    public void markAsPaid() {
+        if (!isPaid) {
+            isPaid = true;
+            System.out.println("Pesanan telah dibayar.");
+        } else {
+            System.out.println("Pesanan sudah dibayar.");
+        }
+    }
+
+    // Mengembalikan total harga pesanan
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    // Mengecek apakah pesanan telah dibayar
+    public boolean isOrderPaid() {
+        return isPaid;
+    }
+}
+
+
+// main
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        FoodOrder foodOrder = new FoodOrder();
+        boolean ordering = true;
+
+        System.out.println("Selamat datang di restoran!");
+
+        // Pengguna dapat menambahkan beberapa item menu ke dalam pesanan
+        while (ordering) {
+            System.out.println("Masukkan nama menu: ");
+            String item = scanner.nextLine();
+
+            System.out.println("Masukkan harga untuk " + item + ": ");
+            double price = scanner.nextDouble();
+            scanner.nextLine();  // Bersihkan newline
+
+            foodOrder.addMenuItem(item, price);
+
+            // Tanyakan apakah pengguna ingin menambahkan item lagi
+            System.out.println("Apakah Anda ingin menambahkan item lain? (yes/no)");
+            String response = scanner.nextLine();
+
+            if (response.equalsIgnoreCase("no")) {
+                ordering = false;
+            }
+        }
+
+        // Menampilkan total harga pesanan
+        System.out.println("Total harga pesanan: Rp " + foodOrder.getTotalPrice());
+
+        // Tanyakan apakah pesanan sudah dibayar
+        System.out.println("Apakah pesanan sudah dibayar? (yes/no)");
+        String isPaidResponse = scanner.nextLine();
+
+        if (isPaidResponse.equalsIgnoreCase("yes")) {
+            foodOrder.markAsPaid();
+        } else {
+            System.out.println("Pesanan belum dibayar.");
+        }
+
+        // Menampilkan status akhir pesanan
+        System.out.println("Status pesanan: " + (foodOrder.isOrderPaid() ? "Sudah dibayar" : "Belum dibayar"));
+        scanner.close();
+    }
+}
+
