@@ -1,0 +1,154 @@
+public class Flight {
+    private int id;
+    private String destination;
+    private int price;
+    private int availableSeats;
+
+    // Constructor untuk kelas Flight
+    public Flight(int id, String destination, int price, int availableSeats) {
+        this.id = id;
+        this.destination = destination;
+        this.price = price;
+        this.availableSeats = availableSeats;
+    }
+
+    // Method untuk menampilkan informasi penerbangan
+    public String displayInfo() {
+        return id + ". " + destination + " - Rp" + price + " | Kursi Tersedia: " + availableSeats;
+    }
+
+    // Method untuk memesan tiket
+    public boolean bookTicket() {
+        if (availableSeats > 0) {
+            availableSeats--;
+            return true;
+        }
+        return false;
+    }
+
+    // Getter untuk id penerbangan
+    public int getId() {
+        return id;
+    }
+
+    // Getter untuk tujuan penerbangan
+    public String getDestination() {
+        return destination;
+    }
+
+    // Getter untuk harga tiket
+    public int getPrice() {
+        return price;
+    }
+
+    // Getter untuk kursi yang tersedia
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+}
+
+public class Reservation {
+    private String customerName;
+    private Flight flight;
+
+    // Constructor untuk kelas Reservation
+    public Reservation(String customerName, Flight flight) {
+        this.customerName = customerName;
+        this.flight = flight;
+    }
+
+    // Method untuk menampilkan informasi pemesanan
+    public String displayInfo() {
+        return "Pemesanan oleh: " + customerName + " | Penerbangan: " + flight.getDestination() + " | Harga: Rp" + flight.getPrice();
+    }
+}
+
+import java.util.ArrayList;
+
+public class ReservationSystem {
+    private ArrayList<Flight> flights;
+    private ArrayList<Reservation> reservations;
+
+    // Constructor untuk kelas ReservationSystem
+    public ReservationSystem() {
+        flights = new ArrayList<>();
+        reservations = new ArrayList<>();
+    }
+
+    // Method untuk menambah penerbangan
+    public void addFlight(int id, String destination, int price, int availableSeats) {
+        flights.add(new Flight(id, destination, price, availableSeats));
+    }
+
+    // Method untuk menampilkan daftar penerbangan
+    public void showFlights() {
+        System.out.println("Daftar Penerbangan:");
+        for (Flight flight : flights) {
+            System.out.println(flight.displayInfo());
+        }
+    }
+
+    // Method untuk memesan tiket
+    public void bookTicket(int flightId, String customerName) {
+        for (Flight flight : flights) {
+            if (flight.getId() == flightId) {
+                if (flight.bookTicket()) {
+                    reservations.add(new Reservation(customerName, flight));
+                    System.out.println("Pemesanan berhasil! Total harga: Rp" + flight.getPrice());
+                    return;
+                } else {
+                    System.out.println("Kursi tidak tersedia.");
+                    return;
+                }
+            }
+        }
+        System.out.println("Penerbangan tidak ditemukan.");
+    }
+
+    // Method untuk menampilkan daftar pemesanan
+    public void showReservations() {
+        System.out.println("Daftar Pemesanan:");
+        for (Reservation reservation : reservations) {
+            System.out.println(reservation.displayInfo());
+        }
+    }
+}
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        // Scanner untuk input dari pengguna
+        Scanner scanner = new Scanner(System.in);
+        // Membuat sistem reservasi
+        ReservationSystem reservationSystem = new ReservationSystem();
+
+        // Menambah penerbangan
+        reservationSystem.addFlight(1, "Jakarta - Bali", 1500000, 100);
+        reservationSystem.addFlight(2, "Jakarta - Surabaya", 500000, 50);
+        reservationSystem.addFlight(3, "Jakarta - Yogyakarta", 700000, 80);
+
+        // Menampilkan daftar penerbangan
+        reservationSystem.showFlights();
+
+        // Meminta ID penerbangan dari pengguna
+        System.out.print("Masukkan ID Penerbangan yang ingin dipesan: ");
+        int flightId = scanner.nextInt();
+        
+        // Consume newline setelah nextInt()
+        scanner.nextLine();
+
+        // Meminta nama pemesan dari pengguna
+        System.out.print("Masukkan Nama Pemesan: ");
+        String customerName = scanner.nextLine();
+
+        // Melakukan pemesanan tiket
+        reservationSystem.bookTicket(flightId, customerName);
+
+        // Menampilkan daftar pemesanan
+        reservationSystem.showReservations();
+
+        // Menutup scanner
+        scanner.close();
+    }
+}
