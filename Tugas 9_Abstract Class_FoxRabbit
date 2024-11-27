@@ -1,0 +1,78 @@
+public abstract class MakhlukHidup {
+    protected int umur;
+    protected boolean hidup;
+
+    public MakhlukHidup() {
+        umur = 0;
+        hidup = true;
+    }
+
+    public abstract void bertindak();
+
+    public boolean isHidup() {
+        return hidup;
+    }
+
+    public void mati() {
+        hidup = false;
+    }
+
+    public void tambahUmur() {
+        umur++;
+        if (umur > umurMaksimal()) {
+            mati();
+        }
+    }
+
+    protected abstract int umurMaksimal();
+}
+
+public class Kelinci extends MakhlukHidup {
+    @Override
+    public void bertindak() {
+        if (isHidup()) {
+            System.out.println("Kelinci makan rumput dan berkembang biak.");
+        }
+    }
+
+    @Override
+    protected int umurMaksimal() {
+        return 5; // Misal: kelinci hidup maksimal 5 tahun
+    }
+}
+
+public class Rubah extends MakhlukHidup {
+    @Override
+    public void bertindak() {
+        if (isHidup()) {
+            System.out.println("Rubah berburu kelinci.");
+        }
+    }
+
+    @Override
+    protected int umurMaksimal() {
+        return 10; // Misal: rubah hidup maksimal 10 tahun
+    }
+}
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<MakhlukHidup> populasi = new ArrayList<>();
+        populasi.add(new Rubah());
+        populasi.add(new Kelinci());
+
+        for (int i = 0; i < 12; i++) { // Simulasi 12 tahun
+            System.out.println("Tahun ke-" + (i + 1));
+            for (MakhlukHidup makhluk : populasi) {
+                if (makhluk.isHidup()) {
+                    makhluk.bertindak();
+                    makhluk.tambahUmur();
+                }
+            }
+            System.out.println();
+        }
+    }
+}
