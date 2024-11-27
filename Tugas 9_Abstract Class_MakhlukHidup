@@ -1,0 +1,58 @@
+public abstract class MakhlukHidup {
+    // Metode abstrak
+    public abstract void bernapas();
+    public abstract void makan();
+}
+
+public class Manusia extends MakhlukHidup {
+    @Override
+    public void bernapas() {
+        System.out.println("Manusia bernapas menggunakan paru-paru.");
+    }
+
+    @Override
+    public void makan() {
+        System.out.println("Manusia makan makanan yang dimasak.");
+    }
+}
+
+public class Hewan extends MakhlukHidup {
+    @Override
+    public void bernapas() {
+        System.out.println("Hewan bernapas menggunakan paru-paru atau insang.");
+    }
+
+    @Override
+    public void makan() {
+        System.out.println("Hewan makan tumbuhan atau daging.");
+    }
+}
+
+public class Tumbuhan extends MakhlukHidup {
+    @Override
+    public void bernapas() {
+        System.out.println("Tumbuhan bernapas melalui stomata.");
+    }
+
+    @Override
+    public void makan() {
+        System.out.println("Tumbuhan membuat makanan sendiri melalui fotosintesis.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MakhlukHidup manusia = new Manusia();
+        MakhlukHidup hewan = new Hewan();
+        MakhlukHidup tumbuhan = new Tumbuhan();
+
+        manusia.bernapas();
+        manusia.makan();
+
+        hewan.bernapas();
+        hewan.makan();
+
+        tumbuhan.bernapas();
+        tumbuhan.makan();
+    }
+}
