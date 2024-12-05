@@ -1,0 +1,40 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ImageViewer {
+    public static void main(String[] args) {
+        // Membuat frame
+        JFrame frame = new JFrame("Image Viewer");
+        frame.setSize(600, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Membuat panel
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        frame.add(panel);
+
+        // Label untuk menampilkan gambar
+        JLabel imageLabel = new JLabel("", SwingConstants.CENTER);
+        panel.add(imageLabel, BorderLayout.CENTER);
+
+        // Tombol Pilih Gambar
+        JButton selectButton = new JButton("Pilih Gambar");
+        panel.add(selectButton, BorderLayout.SOUTH);
+
+        // Event Handling untuk tombol Pilih Gambar
+        selectButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showOpenDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+                ImageIcon imageIcon = new ImageIcon(filePath);
+                Image image = imageIcon.getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH);
+                imageLabel.setIcon(new ImageIcon(image));
+            }
+        });
+
+        // Menampilkan frame
+        frame.setVisible(true);
+    }
+}
